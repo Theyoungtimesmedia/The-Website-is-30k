@@ -5,21 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Opening…</title>
 
-  <!-- Immediate redirect (meta) -->
-  <meta http-equiv="refresh" content="0; url=https://readdy.link/preview/1a224138-8547-46de-8347-a4c692b6c629/2017260" />
-
-  <script>
-    // JavaScript redirect as a fallback in case meta refresh is ignored
-    (function() {
-      var url = "https://readdy.link/preview/1a224138-8547-46de-8347-a4c692b6c629/2017260";
-      try {
-        // replace avoids adding an extra history entry
-        window.location.replace(url);
-      } catch (e) {
-        window.location.href = url;
-      }
-    })();
-  </script>
+  <!-- Meta fallback redirect after 1 second (works when JS disabled) -->
+  <meta http-equiv="refresh" content="1; url=https://readdy.link/preview/630592c3-00e9-4d2f-815f-a5f0c9e9651e/2050764" />
 
   <style>
     body {
@@ -52,31 +39,66 @@
       cursor: pointer;
       font-size: 1rem;
     }
+    .muted { color: #555; font-size: .95rem; }
   </style>
+
+  <script>
+    // target URL
+    const TARGET = "https://readdy.link/preview/630592c3-00e9-4d2f-815f-a5f0c9e9651e/2050764";
+
+    // A small delay so users have a moment to refresh if they want.
+    // Using replace() avoids adding the HTML page to the redirect target's history.
+    function redirectNow(delay = 700) {
+      setTimeout(() => {
+        try {
+          window.location.replace(TARGET);
+        } catch (e) {
+          window.location.href = TARGET;
+        }
+      }, delay);
+    }
+
+    // Run on every load (including refresh)
+    document.addEventListener("DOMContentLoaded", () => {
+      // show a friendly console message for debugging
+      console.log("Will redirect to:", TARGET);
+      redirectNow(700);
+    });
+
+    // Button helper: reloads this page which triggers the same redirect cycle
+    function reloadAndRedirect() {
+      // reload the current HTML file; on reload the script will redirect again
+      window.location.reload();
+    }
+  </script>
 </head>
 <body>
   <div class="card">
     <h1>Opening link…</h1>
-    <p>
-      If the redirect didn't work automatically, click the link below:
+
+    <p class="muted">
+      You will be sent to:
     </p>
 
     <p>
-      <a href="https://readdy.link/preview/1a224138-8547-46de-8347-a4c692b6c629/2017260" target="_blank" rel="noopener">
-        https://readdy.link/preview/1a224138-8547-46de-8347-a4c692b6c629/2017260
+      <a href="https://readdy.link/preview/630592c3-00e9-4d2f-815f-a5f0c9e9651e/2050764" target="_blank" rel="noopener">
+        https://readdy.link/preview/630592c3-00e9-4d2f-815f-a5f0c9e9651e/2050764
       </a>
     </p>
 
+    <p class="muted">
+      If the redirect doesn't happen automatically, click the link above or use the button below.
+      Refreshing this page will also re-run the redirect.
+    </p>
+
     <p>
-      Or use this button to open it in a new tab:
-      <br/>
-      <button onclick="window.open('https://readdy.link/preview/1a224138-8547-46de-8347-a4c692b6c629/2017260','_blank','noopener')">
-        Open in new tab
+      <button onclick="reloadAndRedirect()">
+        Reload &amp; Open
       </button>
     </p>
 
     <noscript>
-      <p><strong>Note:</strong> JavaScript is disabled in your browser. Click the link above to proceed.</p>
+      <p><strong>Note:</strong> JavaScript is disabled. The page will redirect in 1 second via meta refresh — or click the link above.</p>
     </noscript>
   </div>
 </body>
